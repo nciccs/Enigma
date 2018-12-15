@@ -3,11 +3,14 @@ class WidgetHandler
     static init()
     {
         WidgetHandler._widgets = [];
+
+        //object being dragged
         WidgetHandler._holding = null;
         WidgetHandler._holdingDistX;
         WidgetHandler._holdingDistY;
 
-        WidgetHandler._hasMoved = false;
+        //if drag happened
+        WidgetHandler._isDragging = false;
     }
 
     static get holding()
@@ -17,7 +20,7 @@ class WidgetHandler
 
     static get hasMoved()
     {
-        return WidgetHandler._hasMoved;
+        return WidgetHandler._isDragging;
     }
 
     static add(inObject)
@@ -38,7 +41,7 @@ class WidgetHandler
         }
     }
 
-    static outAll()
+    static toString()
     {
         let string = 'length: '+WidgetHandler._widgets.length+'\n';
 
@@ -55,8 +58,10 @@ class WidgetHandler
         return string;
     }
 
-    static find(inMouseX, inMouseY)
+    //find widget with mouse coordinate
+    static findByMouse(inMouseX, inMouseY)
     {
+
         let found;
         for(let i = WidgetHandler._widgets.length-1; i > -1; i--)
         {
@@ -82,12 +87,13 @@ class WidgetHandler
                 }
             }
         }
+
         return found;
     }
 
     static mousePressed()
     {
-        let foundObject = WidgetHandler.find(mouseX, mouseY);
+        let foundObject = WidgetHandler.findByMouse(mouseX, mouseY);
         if(foundObject)
         {
             //disable scrolling
@@ -105,7 +111,11 @@ class WidgetHandler
             WidgetHandler._holdingDistX = WidgetHandler._holding.x - mouseX;
             WidgetHandler._holdingDistY = WidgetHandler._holding.y - mouseY;
 
-            WidgetHandler._hasMoved = false;
+            WidgetHandler._isDragging = false;
+        }
+        else
+        {
+// /alert("size: "+WidgetHandler._widgets.length);
         }
     }
 
@@ -120,7 +130,10 @@ class WidgetHandler
 
             WidgetHandler.limitHoldingInCanvas();
 
-            WidgetHandler._hasMoved = true;
+            WidgetHandler.moveWidgetToTop();                
+            WidgetHandler._isDragging = true;
+//alert("here");
+
         }
         else
         {
@@ -155,10 +168,79 @@ class WidgetHandler
             //drop the holding object
             WidgetHandler._holding = null;
         }
-    }
+    } 
 
     //seems to not work here
     static mouseClicked()
     {
+    }
+
+    static moveWidgetToTop()
+    {
+
+        let widgets = WidgetHandler._widgets;
+
+        if(WidgetHandler._holding != null)
+        {
+            //if is dragging an object and object is not top of stack ...which is last element of data structure
+            if(WidgetHandler._isDragging && WidgetHandler._holding !== widgets[widgets.length-1])
+            {
+                //move object to top of stack by:
+
+                //find the object in stack
+                let foundIndex = WidgetHandler.findByWidget(WidgetHandler._holding);
+
+                //remove from widgets the current position into a variable then
+                //add to last position of widgets
+                widgets.push(widgets.splice(foundIndex, 1)[0]);
+            }
+        }
+    }
+
+    static findByWidget(inWidget)
+    {
+        let found;
+
+        let widgets = WidgetHandler._widgets;
+        for(let i = 0; i < widgets.length; i++)
+        {
+            if(widgets[i] === inWidget)
+            {
+                found = i;
+                i = widgets.length;
+            }
+        }
+
+        return found;
+    }
+
+
+    //deal with draw stack
+    //so the way Scratch works is which ever sprite being dragged is rendered on top
+    //must actually be dragged, clicking without any dragging will not move it to the top
+    static draw()
+    {
+        let widgets = WidgetHandler._widgets;
+        for(let i = 0; i < widgets.length; i++)
+        {
+            widgets[i].draw();
+        }
+//WidgetHandler.moveWidgetToTop();
+/*let plugs = plugboard.plugs;
+for(let i = 0; i < plugs.length; i++)
+{
+    plugs[i].draw();
+}
+
+let reflectors = engine.reflectors;
+for(let i = 0; i < reflectors.length; i++)
+{
+    reflectors[i].draw();
+}
+let rotors = engine.rotors;
+for(let i = 0; i < rotors.length; i++)
+{
+    rotors[i].draw();
+}*/
     }
 }

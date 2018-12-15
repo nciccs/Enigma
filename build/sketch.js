@@ -36,7 +36,9 @@ function draw()
 
     engine.draw();
 
+    WidgetHandler.draw();
 
+    /*
     let plugs = plugboard.plugs;
     for(let i = 0; i < plugs.length; i++)
     {
@@ -52,7 +54,7 @@ function draw()
     for(let i = 0; i < rotors.length; i++)
     {
         rotors[i].draw();
-    }
+    }*/
 
     if(outputText && outputText.length > 0)
     {

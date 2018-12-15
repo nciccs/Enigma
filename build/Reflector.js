@@ -85,6 +85,8 @@ class Reflector
 
     draw()
     {
+        push();
+
         this.topLeftX = this.x-this.width/2;
         this.topLeftY = this.y-this.height/2;
 
@@ -98,6 +100,8 @@ class Reflector
 
         //text(this.name, this.x, this.y-this.height / 3.6);
         text(this.name, this.x, this.y);
+
+        pop();
     }
 
     mousePressed()

@@ -50,8 +50,10 @@ class Plugboard
 
         for(let i = 0; i < 13; i++)
         {
-            let plug1 = new Plug(this, 75+i-13, 550, cableColors[i]);
-            let plug2  = new Plug(this, 125+i-13, 550, cableColors[i])
+            //let plug1 = new Plug(this, 75+i-13, 550, cableColors[i]);
+            //let plug2  = new Plug(this, 125+i-13, 550, cableColors[i]);
+            let plug1 = new Plug(this, 75-13, 550, cableColors[i]);
+            let plug2  = new Plug(this, 125-13, 550, cableColors[i]);
 
             plug1.toPlug = plug2;
             plug2.toPlug = plug1;

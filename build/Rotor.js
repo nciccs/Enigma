@@ -205,6 +205,8 @@ class Rotor
         textSize(18);
 
         let gearWidthRatio = Rotor.GEAR_WIDTH_SCALE;
+        stroke(0);
+        fill(0);
         //text(this.name, this.x + this.width*0.1, this.y-this.height / 3.6);
         text(this.name, this.topLeftX + this.width * (1-gearWidthRatio) + this.width * gearWidthRatio / 2, this.y);
 

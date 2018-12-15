@@ -72,7 +72,7 @@ class KeyboardDisplay
     {
         let key = '';
 
-        let widget = WidgetHandler.find(inMouseX, inMouseY);
+        let widget = WidgetHandler.findByMouse(inMouseX, inMouseY);
 
         for(let i = 0; i < this.keys.length; i++)
         {
