@@ -10,6 +10,7 @@ function setup()
     frameRate(30);
     // put setup code here
     createCanvas(800, 600);
+    //createCanvas(960, 720);
     //createCanvas(windowWidth, windowHeight);
 
     keyboardDisplay = new KeyboardDisplay();

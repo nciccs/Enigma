@@ -131,12 +131,11 @@ class WidgetHandler
 
             WidgetHandler.limitHoldingInCanvas();
 
-            WidgetHandler.moveWidgetToTop();
-
             //if has moved then is dragging
             if(!(WidgetHandler._holdingStartX == mouseX && WidgetHandler._holdingStartY == mouseY))
             {
                 WidgetHandler._isDragging = true;
+                WidgetHandler.moveWidgetToTop();
             }
         }
     }
@@ -149,7 +148,7 @@ class WidgetHandler
 
         let halfWidth = WidgetHandler._holding.width/2;
         let halfHeight = WidgetHandler._holding.height/2;
-        
+
         WidgetHandler._holding.x = constrain(WidgetHandler._holding.x, halfWidth, width - halfWidth);
         WidgetHandler._holding.y = constrain(WidgetHandler._holding.y, halfHeight, height - halfHeight);
     }
@@ -182,8 +181,8 @@ class WidgetHandler
 
         if(WidgetHandler._holding != null)
         {
-            //if is dragging an object and object is not top of stack ...which is last element of data structure
-            if(WidgetHandler._isDragging && WidgetHandler._holding !== widgets[widgets.length-1])
+            //if object is not on top of stack ...which is last element of data structure
+            if(WidgetHandler._holding !== widgets[widgets.length-1])
             {
                 //move object to top of stack by:
 
@@ -193,6 +192,29 @@ class WidgetHandler
                 //remove from widgets the current position into a variable then
                 //add to last position of widgets
                 widgets.push(widgets.splice(foundIndex, 1)[0]);
+            }
+        }
+    }
+
+    static moveWidgetToBottom()
+    {
+        let widgets = WidgetHandler._widgets;
+
+        if(WidgetHandler._holding != null)
+        {
+            //if object is not on bottom of stack
+            if(WidgetHandler._holding !== widgets[0])
+            {
+                //move object to bottom of stack by:
+
+                //find the object in stack
+                let foundIndex = WidgetHandler.findByWidget(WidgetHandler._holding);
+
+                //remove widget
+                let widget = widgets.splice(foundIndex, 1)[0];
+
+                //plant it into bottom of stack which is 1st element, index 0
+                widgets.splice(0, 0, widget);
             }
         }
     }

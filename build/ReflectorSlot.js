@@ -5,15 +5,18 @@ class ReflectorSlot
         this.x = 0;
         this.y = 0;
 
+        this.margin = 5;
+
         //width and height needs to be set first to get topLeftX and topLeftY
         //this.width = 65;
         //this.height = 120;
-        this.width = Reflector.START_WIDTH;
-        this.height = Reflector.START_HEIGHT;
+        this.width = Reflector.START_WIDTH + this.margin * 2;
+        this.height = Reflector.START_HEIGHT + this.margin*2;
 
-        this.margin = 5;
+        this.backgroundColor = 160;
+        this.slotColor = 50;
 
-        this.distFromRotorStack = 5;
+        this.distFromRotorStack = 0;
         
         if(rotorStack != null)
         {
@@ -25,7 +28,7 @@ class ReflectorSlot
         this.topLeftX = this.x-this.width/2;
         this.topLeftY = this.y-this.height/2;
 
-        this.reflectorSlotColor = 50;
+        //this.reflectorSlotColor = 50;
 
         this.reflector = null;
     }
@@ -34,11 +37,9 @@ class ReflectorSlot
     {
         this.x = this.rotorStack.topLeftX - this.width/2 - this.distFromRotorStack;
 
-        if(this.reflector == null)
-        {
-            this.drawReflectorSlot();
-        }
-        else
+        this.drawReflectorSlot();
+
+        if(this.reflector != null)
         {
             this.reflector.x = this.x;
             this.reflector.y = this.y;
@@ -52,9 +53,14 @@ class ReflectorSlot
         this.topLeftX = this.x-this.width/2;
         this.topLeftY = this.y-this.height/2;
 
-        fill(this.reflectorSlotColor);
+        fill(this.backgroundColor);
 
+        //draw overall rect
         rect(this.topLeftX, this.topLeftY, this.width, this.height, this.cornerRadius);
+
+        fill(this.slotColor);
+        //draw slot rect
+        rect(this.topLeftX+this.margin, this.topLeftY+this.margin, this.width-this.margin*2, this.height-this.margin*2);
 
         stroke(255);
         fill(255);

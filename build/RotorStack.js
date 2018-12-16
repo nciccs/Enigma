@@ -29,20 +29,35 @@ class RotorStack
 
     add(inRotor)
     {
-this.rotors.push(inRotor);
+        //add only if rotor doesn't exist
+        let found = this.findIndexByRotor(inRotor);
+        if(found == null)
+        {
+            this.rotors.push(inRotor);
+        }
     }
-//findRotor(inMouseX, inMouseY)
 
     remove(inRotor)
     {
+        let found = this.findIndexByRotor(inRotor);
+        if(found != null)
+        {
+            this.rotors.splice(found, 1);
+        }
+    }
+
+    findIndexByRotor(inRotor)
+    {
+        let found;
         for(let i = 0; i < this.rotors.length; i++)
         {
             if(this.rotors[i] === inRotor)
             {
-                this.rotors.splice(i, 1);
+                found = i;
                 i = this.rotors.length;
             }
         }
+        return found;
     }
 
     //so far into the project and only just learnt push and pop...

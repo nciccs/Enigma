@@ -317,6 +317,8 @@ class Rotor
             {
                 //add to stack
                 this.rotorStack.add(this);
+
+                WidgetHandler.moveWidgetToBottom();
             }
         }
         //no mouse drag happened

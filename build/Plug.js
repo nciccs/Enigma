@@ -118,6 +118,13 @@ class Plug
                 this.slot = slot;
                 slot.plug = this;
 
+                WidgetHandler.moveWidgetToBottom();
+            }
+            else
+            {
+                //teleport outside of slot area, so that this doesn't cover up slot
+                this.x = this.x <= slot.x ? slot.x-this.plugboard.spaceX/2 : slot.x+this.plugboard.spaceX/2;
+                //this.y = slot.y;
             }
         }
     }

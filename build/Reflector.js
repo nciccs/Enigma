@@ -113,6 +113,9 @@ class Reflector
             {
                 this.reflectorSlot.reflector = null;
             }
+
+            //WidgetHandler._holding.x = constrain(WidgetHandler._holding.x, halfWidth, width - halfWidth);
+            //this.x = constrain(this.x, this.width/2, this.reflectorSlot.topLeftX+this.reflectorSlot.width-this.width/2);
         }
     }
 
@@ -128,6 +131,14 @@ class Reflector
                 this.y = this.reflectorSlot.y;
 
                 this.reflectorSlot.reflector = this;
+                
+                WidgetHandler.moveWidgetToBottom();
+            }
+            else
+            {
+                //teleport outside of slot area, so that this doesn't cover up slot
+                this.x = this.reflectorSlot.topLeftX - Reflector.START_WIDTH / 2 - this.reflectorSlot.margin;
+                //this.y = this.reflectorSlot.y;
             }
         }
     }
