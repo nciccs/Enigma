@@ -40,5 +40,12 @@ class PlugSlot
         ellipse(this.x, this.y+this.height*0.25, this.width*0.8, this.width*0.8);
         fill(0)
         ellipse(this.x, this.y+this.height*0.25, this.width*0.3, this.width*0.3);
+
+        //update plug coordinate if it exists
+        if(this.plug != null)
+        {
+            this.plug.x = this.x;
+            this.plug.y = this.y;
+        }
     }
 }

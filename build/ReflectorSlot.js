@@ -30,6 +30,19 @@ class ReflectorSlot
 
     draw()
     {
+        if(this.reflector == null)
+        {
+            this.drawReflectorSlot();
+        }
+        else
+        {
+            this.reflector.x = this.x;
+            this.reflector.y = this.y;
+        }
+    }
+
+    drawReflectorSlot()
+    {
         push();
 
         this.x = this.rotorStack.topLeftX - this.width/2 - this.distFromRotorStack;

@@ -104,11 +104,14 @@ class Reflector
         pop();
     }
 
-    mousePressed()
+    mouseDragged()
     {
-        if(this.reflectorSlot.reflector === this)
+        if(!WidgetHandler.isDragging)
         {
-            this.reflectorSlot.reflector = null;
+            if(this.reflectorSlot.reflector === this)
+            {
+                this.reflectorSlot.reflector = null;
+            }
         }
     }
 
@@ -124,12 +127,6 @@ class Reflector
                 this.y = this.reflectorSlot.y;
 
                 this.reflectorSlot.reflector = this;
-            }
-            //teleport to left...need to avoid overlap
-            //like placing a reflector directly on top of another, making it confusing to see which one is slotted
-            else
-            {
-                this.x = this.reflectorSlot.x - this.reflectorSlot.width - 10;
             }
         }
     }

@@ -24,6 +24,21 @@ class RotorStack
 
         //holds multiple rotors
         this.rotors = [];
+
+    }
+
+//findRotor(inMouseX, inMouseY)
+
+    remove(inRotor)
+    {
+        for(let i = 0; i < this.rotors.length; i++)
+        {
+            if(this.rotors[i] === inRotor)
+            {
+                this.rotors.splice(i, 1);
+                i = this.rotors.length;
+            }
+        }
     }
 
     //so far into the project and only just learnt push and pop...
@@ -33,21 +48,17 @@ class RotorStack
     draw()
     {
         //number of slots to draw
-        let numSlots = this.rotors.length;
+        //let numSlots = this.numSlots;
+        let numSlots = this.rotors.length == 0 ? 1 : this.rotors.length;
 
-        if(this.rotors.length == 0)
-        {
-            numSlots = 1;
-        }
-
-        this.width = this.startWidth*(numSlots);
+        //need to deal with margin
+        this.width = (this.startWidth-this.margin)*(numSlots) + this.margin;
 
         this.topLeftX = this.x-this.width/2;
         this.topLeftY = this.y-this.height/2;
 
-        fill(this.backgroundColor);
-
         //draw background rect
+        fill(this.backgroundColor);
         rect(this.topLeftX, this.topLeftY, this.width, this.height);
 
         let leftoverSpace = this.width - Rotor.START_WIDTH * numSlots;
@@ -55,8 +66,18 @@ class RotorStack
 
         for(let i = 0; i < numSlots; i++)
         {
-            //draw a silhouette of rotor representing rotor slot          
-            Rotor.drawRotor(this.topLeftX+(gap+Rotor.START_WIDTH/2)+i*(gap+Rotor.START_WIDTH), this.y, this.slotColor, this.slotColor);
+            //add in a gap and add in to middle of rotor, offset by multiple of gap + rotor width
+            let rotorX = this.topLeftX + (gap+Rotor.START_WIDTH/2) + i*(gap+Rotor.START_WIDTH);
+
+            //draw a shadow/silhouette of rotor representing rotor slot          
+            Rotor.drawRotor(rotorX, this.y, this.slotColor, this.slotColor);
+
+            //this teleports rotor inside rotors into position every draw call
+            if(this.rotors.length > 0)
+            {
+                this.rotors[i].x = rotorX;
+                this.rotors[i].y = this.y;
+            }
         }
 
         /*
@@ -70,4 +91,5 @@ class RotorStack
         //text("Walzen", this.x+this.width/2+35, this.y);
         */
     }
+
 }

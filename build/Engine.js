@@ -25,19 +25,29 @@ class Engine
         this.rotors[3].setToII();
         this.rotors[4].setToI();
 
-        let startOffsetX = 2;
-        let startOffsetY = 10;
+this.reflectorSlot.reflector = this.reflectors[1];
 
-        for(let i = this.rotors.length-1; i > -1; i--)
-        {
-            this.rotors[i].x = this.rotors[i].x - i * startOffsetX;
-        }
 
-        startOffsetX = 10;
-        startOffsetY = 10;
+this.rotorStack.rotors.push(this.rotors[0]);
+//this.rotorStack.rotors.push( this.rotors[0], this.rotors[1]);
+//this.rotorStack.rotors.push( this.rotors[0], this.rotors[1], this.rotors[2]);
+//this.rotorStack.rotors.push( this.rotors[0], this.rotors[1], this.rotors[2], this.rotors[3]);
+//this.rotorStack.rotors.push( this.rotors[0], this.rotors[1], this.rotors[2], this.rotors[3], this.rotors[4] );
 
-        this.reflectors[0].x = this.reflectors[1].x - startOffsetX;
-        this.reflectors[0].y = this.reflectors[1].y + startOffsetY;
+        //stacking them like cards, looks cool but can accidentally click/touch the ones behind it
+        // let startOffsetX = 2;
+        // let startOffsetY = 10;
+
+        // for(let i = this.rotors.length-1; i > -1; i--)
+        // {
+        //     this.rotors[i].x = this.rotors[i].x - i * startOffsetX;
+        // }
+
+        // startOffsetX = 10;
+        // startOffsetY = 10;
+
+        // this.reflectors[0].x = this.reflectors[1].x - startOffsetX;
+        // this.reflectors[0].y = this.reflectors[1].y + startOffsetY;
     }
 
     cipher(inIndex)
@@ -48,7 +58,5 @@ class Engine
     {
         this.rotorStack.draw();
         this.reflectorSlot.draw();
-
-        //outputText = this.reflectorSlot.reflector ? Object.values(this.reflectorSlot.reflector) : "null";
     }
 }

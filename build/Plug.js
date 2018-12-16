@@ -58,19 +58,21 @@ class Plug
         pop();
     }
 
-    mousePressed()
+    mouseDragged()
     {
-        //if plug is in a slot
-        if(this.slot != null)
+        if(!WidgetHandler.isDragging)
         {
-            //slot is not occupied by plug
-            this.slot.plug = null;
+            //if plug is in a slot
+            if(this.slot != null)
+            {
+                //slot is not occupied by plug
+                this.slot.plug = null;
 
-            //indicate plug isn't connected to slot
-            this.slot = null;
+                //indicate plug isn't connected to slot
+                this.slot = null;
+            }
         }
     }
-
     /*
         find slot that collided with plug
 
@@ -117,17 +119,6 @@ class Plug
                 slot.plug = this;
 
             }
-            //plug landed in slot area but slot is taken
-            else
-            {
-                //teleport plug outside of slot area
-                this.x = this.x <= slot.x ? slot.x-Plugboard.START_SPACE_X/2 :slot.x+Plugboard.START_SPACE_X/2;
-                this.y = slot.y;
-            }
-        }
-        else
-        {
-
         }
     }
 }

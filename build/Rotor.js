@@ -290,16 +290,67 @@ class Rotor
         pop();
     }
 
-
-    mousePressed()
+    mouseDragged()
     {
-        
+        if(!WidgetHandler.isDragging)
+        {
+            //remove this rotor from rotor stack
+            this.rotorStack.remove(this);
+        }
     }
 
     mouseReleased()
     {
+        //mouse drag happened
+        if(WidgetHandler.isDragging)
+        {
 
+        }
+        //no mouse drag happened
+        else
+        {
+            this.rotate(mouseX, mouseY);
+        }
     }
+
+    rotate(inMouseX, inMouseY)
+    {
+        if(inMouseX >= this.topLeftX+this.ring.width)
+        {
+            //if mouseY is below mid
+            if(inMouseY >= this.y)
+            {
+                this.rotateDown();
+            }
+            else
+            {
+                this.rotateUp();
+            }
+        }
+        else
+        {
+            //if mouseY is below mid
+            if(inMouseY >= this.y)
+            {
+                this.ring.rotateDown();
+            }
+            else
+            {
+                this.ring.rotateUp();
+            }
+        }
+    }
+/*
+        let leftoverSpace = this.width - Rotor.START_WIDTH * numSlots;
+        let gap = leftoverSpace / (1+numSlots);
+
+        for(let i = 0; i < numSlots; i++)
+        {
+            //draw a silhouette of rotor representing rotor slot          
+            Rotor.drawRotor(this.topLeftX+(gap+Rotor.START_WIDTH/2)+i*(gap+Rotor.START_WIDTH), this.y, this.slotColor, this.slotColor);
+        }
+*/
+
 
 /*
     mousePressed()

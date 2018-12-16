@@ -9,6 +9,8 @@ class WidgetHandler
         WidgetHandler._holdingDistX;
         WidgetHandler._holdingDistY;
 
+        WidgetHandler._holdingStartX;
+        WidgetHandler._holdingStartY;
         //if drag happened
         WidgetHandler._isDragging = false;
     }
@@ -18,7 +20,7 @@ class WidgetHandler
         return WidgetHandler._holding;
     }
 
-    static get hasMoved()
+    static get isDragging()
     {
         return WidgetHandler._isDragging;
     }
@@ -111,11 +113,10 @@ class WidgetHandler
             WidgetHandler._holdingDistX = WidgetHandler._holding.x - mouseX;
             WidgetHandler._holdingDistY = WidgetHandler._holding.y - mouseY;
 
+            WidgetHandler._holdingStartX = mouseX;
+            WidgetHandler._holdingStartY = mouseY;
+
             WidgetHandler._isDragging = false;
-        }
-        else
-        {
-// /alert("size: "+WidgetHandler._widgets.length);
         }
     }
 
@@ -130,13 +131,13 @@ class WidgetHandler
 
             WidgetHandler.limitHoldingInCanvas();
 
-            WidgetHandler.moveWidgetToTop();                
-            WidgetHandler._isDragging = true;
-//alert("here");
+            WidgetHandler.moveWidgetToTop();
 
-        }
-        else
-        {
+            //if has moved then is dragging
+            if(!(WidgetHandler._holdingStartX == mouseX && WidgetHandler._holdingStartY == mouseY))
+            {
+                WidgetHandler._isDragging = true;
+            }
         }
     }
 
@@ -177,7 +178,6 @@ class WidgetHandler
 
     static moveWidgetToTop()
     {
-
         let widgets = WidgetHandler._widgets;
 
         if(WidgetHandler._holding != null)
@@ -225,22 +225,5 @@ class WidgetHandler
         {
             widgets[i].draw();
         }
-//WidgetHandler.moveWidgetToTop();
-/*let plugs = plugboard.plugs;
-for(let i = 0; i < plugs.length; i++)
-{
-    plugs[i].draw();
-}
-
-let reflectors = engine.reflectors;
-for(let i = 0; i < reflectors.length; i++)
-{
-    reflectors[i].draw();
-}
-let rotors = engine.rotors;
-for(let i = 0; i < rotors.length; i++)
-{
-    rotors[i].draw();
-}*/
     }
 }

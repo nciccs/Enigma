@@ -7,6 +7,8 @@ class Ring
         this.red = color(255, 0, 0);
 
         this.displayColor = color(0, 0, 128);
+        //this.displayColor = this.red;
+        //this.displayColor = 0;
 
         this.x;
         this.y;
