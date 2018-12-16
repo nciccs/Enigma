@@ -28,9 +28,9 @@ class Engine
 this.reflectorSlot.reflector = this.reflectors[1];
 
 
-this.rotorStack.rotors.push(this.rotors[0]);
+//this.rotorStack.rotors.push(this.rotors[0]);
 //this.rotorStack.rotors.push( this.rotors[0], this.rotors[1]);
-//this.rotorStack.rotors.push( this.rotors[0], this.rotors[1], this.rotors[2]);
+this.rotorStack.rotors.push( this.rotors[2], this.rotors[3], this.rotors[4]);
 //this.rotorStack.rotors.push( this.rotors[0], this.rotors[1], this.rotors[2], this.rotors[3]);
 //this.rotorStack.rotors.push( this.rotors[0], this.rotors[1], this.rotors[2], this.rotors[3], this.rotors[4] );
 
