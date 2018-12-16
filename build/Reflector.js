@@ -19,7 +19,8 @@ class Reflector
 
         this.color = 255;
 
-        this.x = width * 0.12;
+        //this.x = width * 0.12;
+        this.x = Reflector.START_WIDTH / 2;
         this.y = 100;
 
         this.width = Reflector.START_WIDTH;
@@ -106,7 +107,7 @@ class Reflector
 
     mouseDragged()
     {
-        if(!WidgetHandler.isDragging)
+        if(WidgetHandler.isDragging)
         {
             if(this.reflectorSlot.reflector === this)
             {

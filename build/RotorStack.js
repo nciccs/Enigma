@@ -27,6 +27,10 @@ class RotorStack
 
     }
 
+    add(inRotor)
+    {
+this.rotors.push(inRotor);
+    }
 //findRotor(inMouseX, inMouseY)
 
     remove(inRotor)

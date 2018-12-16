@@ -60,7 +60,7 @@ class Plug
 
     mouseDragged()
     {
-        if(!WidgetHandler.isDragging)
+        if(WidgetHandler.isDragging)
         {
             //if plug is in a slot
             if(this.slot != null)

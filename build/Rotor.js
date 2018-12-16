@@ -7,7 +7,8 @@ class Rotor
         this.red = color(255, 0, 0);
         this.color = 255;
 
-        this.x = width * 0.85;
+        //this.x = width * 0.85;
+        this.x = width - Rotor.START_WIDTH / 2 - 1;
         this.y = 100;
 
         this.width = Rotor.START_WIDTH;
@@ -261,6 +262,7 @@ class Rotor
         this.ring.draw();
     }
 
+    //entire bound of entire rotor including gear
     static drawRotor(rotorX, rotorY, fillColor=255, strokeColor=0)
     {
         push();
@@ -268,12 +270,18 @@ class Rotor
         fill(fillColor);
         stroke(strokeColor);
 
-        //entire bound of entire rotor including gear
         let rotorTopLeftX = rotorX - Rotor.START_WIDTH / 2;
         let rotorTopLeftY = rotorY - Rotor.START_HEIGHT / 2;
 
         let rotorInnerTopLeftY = rotorY - Rotor.START_HEIGHT / 2 / Rotor.GEAR_HEIGHT_SCALE;
         let rotorInnerHeight = Rotor.START_HEIGHT / Rotor.GEAR_HEIGHT_SCALE;
+
+        // //draw outline of rotor
+        // push();
+        // fill(color(200, 200, 200, 0));
+
+        // rect(rotorTopLeftX, rotorTopLeftY, Rotor.START_WIDTH, Rotor.START_HEIGHT);
+        // pop();
 
         //body of rotor
         rect(rotorTopLeftX, rotorInnerTopLeftY, Rotor.START_WIDTH, rotorInnerHeight);
@@ -292,7 +300,8 @@ class Rotor
 
     mouseDragged()
     {
-        if(!WidgetHandler.isDragging)
+
+        if(WidgetHandler.isDragging)
         {
             //remove this rotor from rotor stack
             this.rotorStack.remove(this);
@@ -304,7 +313,11 @@ class Rotor
         //mouse drag happened
         if(WidgetHandler.isDragging)
         {
-
+            if(this.collideRotorStack())
+            {
+                //add to stack
+                this.rotorStack.add(this);
+            }
         }
         //no mouse drag happened
         else
@@ -340,93 +353,37 @@ class Rotor
             }
         }
     }
-/*
-        let leftoverSpace = this.width - Rotor.START_WIDTH * numSlots;
-        let gap = leftoverSpace / (1+numSlots);
 
-        for(let i = 0; i < numSlots; i++)
-        {
-            //draw a silhouette of rotor representing rotor slot          
-            Rotor.drawRotor(this.topLeftX+(gap+Rotor.START_WIDTH/2)+i*(gap+Rotor.START_WIDTH), this.y, this.slotColor, this.slotColor);
-        }
-*/
-
-
-/*
-    mousePressed()
+    collideRotorStack()
     {
-        //if plug is in a slot
-        if(this.slot != null)
-        {
-            //slot is not occupied by plug
-            this.slot.plug = null;
+        let collided = false;
+        //collideRectCentre(x1, y1, width1, height1, x2, y2, width2, height2)
+        let rotorStackX = this.rotorStack.x;
+        let rotorStackY = this.rotorStack.y;
+        let rotorStackWidth = this.rotorStack.width;
+        let rotorStackHeight = this.rotorStack.height;
 
-            //indicate plug isn't connected to slot
-            this.slot = null;
+        //inner rotor
+        let rotorInnerHeight = Rotor.START_HEIGHT / Rotor.GEAR_HEIGHT_SCALE;
+
+        //gear
+        let gearWidth = Rotor.START_WIDTH * Rotor.GEAR_WIDTH_SCALE;
+        let gearX = this.x + this.width / 2 - gearWidth / 2;
+
+        //ring
+        let ringX = this.ring.x;
+        let ringWidth = this.ring.width;
+        let rightHeight = this.ring.height;
+
+        if(
+        Collision.collideRectCentre(rotorStackX, rotorStackY, rotorStackWidth, rotorStackHeight, this.x, this.y, this.width, rotorInnerHeight) ||
+        Collision.collideRectCentre(rotorStackX, rotorStackY, rotorStackWidth, rotorStackHeight, gearX, this.y, gearWidth, this.height) ||
+        Collision.collideRectCentre(rotorStackX, rotorStackY, rotorStackWidth, rotorStackHeight, ringX, this.y, ringWidth, rightHeight)
+        )
+        {
+            collided = true;   
         }
+
+        return collided;
     }
-
-    mouseReleased()
-    {
-        //can't have shape collision here, got to use centre of plug vs inner circular area of slot
-        let slot = this.plugboard.findSlot(this.x, this.y);
-
-        //if found slot
-        if(slot != null)
-        {
-            //if slot is not plugged
-            if(slot.plug == null)
-            {
-                //teleport plug to slot xy
-                this.x = slot.x;
-                this.y = slot.y;
-
-                this.slot = slot;
-                slot.plug = this;
-
-            }
-            //plug landed in slot area but slot is taken
-            else
-            {
-                //teleport plug outside of slot area
-                this.x = this.x <= slot.x ? slot.x-Plugboard.START_SPACE_X/2 :slot.x+Plugboard.START_SPACE_X/2;
-                this.y = slot.y;
-            }
-        }
-        else
-        {
-
-        }
-    }
-
-    mousePressed()
-    {
-        if(this.container.reflector === this)
-        {
-            this.container.reflector = null;
-        }
-    }
-
-    mouseReleased()
-    {
-        //if this object is dropped on reflector slot
-        if(Collision.collideRectObject(this, this.container))
-        {
-            //if slot is empty, lock it in, add to container
-            if(this.container.reflector == null)
-            {
-                this.x = this.container.x;
-                this.y = this.container.y;
-
-                this.container.reflector = this;
-            }
-            //teleport to left...need to avoid overlap
-            //like placing a reflector directly on top of another, making it confusing to see which one is slotted
-            else
-            {
-                this.x = this.container.x - this.container.width - 10;
-            }
-        }
-    }*/
-
 }

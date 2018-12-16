@@ -10,7 +10,9 @@ class ReflectorSlot
         //this.height = 120;
         this.width = Reflector.START_WIDTH;
         this.height = Reflector.START_HEIGHT;
-        
+
+        this.margin = 5;
+
         this.distFromRotorStack = 5;
         
         if(rotorStack != null)
@@ -30,6 +32,8 @@ class ReflectorSlot
 
     draw()
     {
+        this.x = this.rotorStack.topLeftX - this.width/2 - this.distFromRotorStack;
+
         if(this.reflector == null)
         {
             this.drawReflectorSlot();
@@ -44,8 +48,6 @@ class ReflectorSlot
     drawReflectorSlot()
     {
         push();
-
-        this.x = this.rotorStack.topLeftX - this.width/2 - this.distFromRotorStack;
 
         this.topLeftX = this.x-this.width/2;
         this.topLeftY = this.y-this.height/2;
