@@ -304,6 +304,12 @@ class Rotor
         {
             //remove this rotor from rotor stack
             this.rotorStack.remove(this);
+
+            this.rotorStack.cursor = this.rotorStack.findAddAt(this);
+        }
+        else
+        {
+            this.rotorStack.cursor = -1;
         }
     }
 
@@ -318,8 +324,10 @@ class Rotor
                 if(this.rotorStack.add(this))
                 {
                     WidgetHandler.moveWidgetToBottom();
+
                 }
             }
+            this.rotorStack.cursor = -1;
         }
         //no mouse drag happened
         else

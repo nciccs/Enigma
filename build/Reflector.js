@@ -137,7 +137,7 @@ class Reflector
             else
             {
                 //teleport outside of slot area, so that this doesn't cover up slot
-                this.x = this.reflectorSlot.topLeftX - Reflector.START_WIDTH / 2 - this.reflectorSlot.margin;
+                //this.x = this.reflectorSlot.topLeftX - Reflector.START_WIDTH / 2 - this.reflectorSlot.margin;
                 //this.y = this.reflectorSlot.y;
             }
         }
