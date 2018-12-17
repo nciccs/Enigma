@@ -27,6 +27,8 @@ class RotorStack
 
     }
 
+//this just adds last element of stack.......
+//need to modify this to add to specific element depending on where rotor's coordinate is
     add(inRotor)
     {
         //add only if rotor doesn't exist
