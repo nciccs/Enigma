@@ -276,12 +276,11 @@ class Rotor
         let rotorInnerTopLeftY = rotorY - Rotor.START_HEIGHT / 2 / Rotor.GEAR_HEIGHT_SCALE;
         let rotorInnerHeight = Rotor.START_HEIGHT / Rotor.GEAR_HEIGHT_SCALE;
 
-        // //draw outline of rotor
-        // push();
-        // fill(color(200, 200, 200, 0));
-
-        // rect(rotorTopLeftX, rotorTopLeftY, Rotor.START_WIDTH, Rotor.START_HEIGHT);
-        // pop();
+// //draw outline of rotor
+// push();
+// fill(color(200, 200, 200, 0));
+// rect(rotorTopLeftX, rotorTopLeftY, Rotor.START_WIDTH, Rotor.START_HEIGHT);
+// pop();
 
         //body of rotor
         rect(rotorTopLeftX, rotorInnerTopLeftY, Rotor.START_WIDTH, rotorInnerHeight);
@@ -301,7 +300,7 @@ class Rotor
     mouseDragged()
     {
 
-        if(WidgetHandler.isDragging)
+        if(WidgetHandler.isDragging && this.collideRotorStack())
         {
             //remove this rotor from rotor stack
             this.rotorStack.remove(this);
@@ -316,9 +315,10 @@ class Rotor
             if(this.collideRotorStack())
             {
                 //add to stack
-                this.rotorStack.add(this);
-
-                WidgetHandler.moveWidgetToBottom();
+                if(this.rotorStack.add(this))
+                {
+                    WidgetHandler.moveWidgetToBottom();
+                }
             }
         }
         //no mouse drag happened

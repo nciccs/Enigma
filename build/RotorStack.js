@@ -25,18 +25,40 @@ class RotorStack
         //holds multiple rotors
         this.rotors = [];
 
+        //affects draw
+        this.cursor = -1;
     }
 
 //this just adds last element of stack.......
 //need to modify this to add to specific element depending on where rotor's coordinate is
     add(inRotor)
     {
+        let success = false;
         //add only if rotor doesn't exist
         let found = this.findIndexByRotor(inRotor);
         if(found == null)
         {
-            this.rotors.push(inRotor);
+            let cursor = -1;
+            for(let i = 0; i < this.rotors.length; i++)
+            {
+                if(inRotor.x <= this.rotors[i].x)
+                {
+                    cursor = i;
+                    i = this.rotors.length;
+                }
+            }
+
+            if(cursor == -1)
+            {
+                cursor = this.rotors.length;
+            }
+
+            //outputText = "cursor " + cursor;
+            this.rotors.splice(cursor, 0, inRotor);
+
+            success = true;
         }
+        return success;
     }
 
     remove(inRotor)
