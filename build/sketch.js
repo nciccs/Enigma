@@ -15,7 +15,7 @@ function setup()
 
     keyboardDisplay = new KeyboardDisplay();
     plugboard = new Plugboard();
-    engine = new Engine();
+    engine = new Engine(plugboard);
 
 
 }
@@ -39,24 +39,6 @@ function draw()
 
     WidgetHandler.draw();
 
-    /*
-    let plugs = plugboard.plugs;
-    for(let i = 0; i < plugs.length; i++)
-    {
-        plugs[i].draw();
-    }
-
-    let reflectors = engine.reflectors;
-    for(let i = 0; i < reflectors.length; i++)
-    {
-        reflectors[i].draw();
-    }
-    let rotors = engine.rotors;
-    for(let i = 0; i < rotors.length; i++)
-    {
-        rotors[i].draw();
-    }*/
-
     if(outputText && outputText.length > 0)
     {
         //debug only
@@ -69,19 +51,12 @@ function draw()
     pop();
 }
 
-function cipher(inChar)
-{
-    
-    
-    return plugboard.cipher(inChar);    
-    return false;
-}
-
 function keyPressed()
 {
     //outputText = key;
     keyboardDisplay.keyPressed();
-    let result = cipher(keyboardDisplay.pressedKey)
+
+    let result = engine.cipher(keyboardDisplay.pressedKey)
     if(result)
     {
         keyboardDisplay.lightKey = result;
@@ -103,13 +78,16 @@ function mousePressed()
 {
     keyboardDisplay.mousePressed();
 
-    let result = cipher(keyboardDisplay.pressedKey)
-    if(result)
+    if(keyboardDisplay.pressedKey)
     {
-        keyboardDisplay.lightKey = result;
-    }
+        let result = engine.cipher(keyboardDisplay.pressedKey)
+        if(result != null)
+        {
+            keyboardDisplay.lightKey = result;
+        }
 
-    keyboardDisplay.pressedKey = '';
+        keyboardDisplay.pressedKey = '';
+    }
 
     WidgetHandler.mousePressed();
 }

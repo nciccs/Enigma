@@ -49,18 +49,23 @@ class KeyboardDisplay
 
     keyPressed()
     {
-        if('a' <= key && key <= 'z' || 'A' <= key && key <= 'Z')
+        if(key.length == 1 && key.match(/^[a-zA-Z]+$/))
         {
             //keyboardDisplay.lightKey = key;
             keyboardDisplay.pressedKey = key;
             //keyboardDisplay.lightKey = key;
+        }
+        else
+        {
+            //alert("not valid");
         }
     }
     
     mousePressed()
     {
         let key = this.getKey(mouseX, mouseY);
-        if('a' <= key && key <= 'z' || 'A' <= key && key <= 'Z')
+
+        if(key.length == 1 && key.match(/^[a-zA-Z]+$/))
         {
 
             this.pressedKey = key;

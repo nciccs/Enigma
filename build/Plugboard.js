@@ -94,20 +94,23 @@ class Plugboard
 
     cipher(inChar)
     {
-        let toChar = '';
-        let slot = this.charSlotMap[inChar.toUpperCase()];
-
-        if(slot != null)
+        let toChar;
+        if(inChar != null)
         {
-            toChar = slot.c;
+            let slot = this.charSlotMap[inChar.toUpperCase()];
 
-            //if there is plug
-            if(slot.plug != null)
+            if(slot != null)
             {
-                let toSlot = slot.plug.toPlug.slot;
-                if(toSlot != null)
+                toChar = slot.c;
+
+                //if there is plug
+                if(slot.plug != null)
                 {
-                    toChar = toSlot.c;
+                    let toSlot = slot.plug.toPlug.slot;
+                    if(toSlot != null)
+                    {
+                        toChar = toSlot.c;
+                    }
                 }
             }
         }

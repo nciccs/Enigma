@@ -129,30 +129,35 @@ class Rotor
     {
         this.name = "I";
         this.setCipher(this.I);
+        this.notch = 'Q'.charCodeAt() - 'A'.charCodeAt();
     }
     
     setToII()
     {
         this.name = "II";
         this.setCipher(this.II);
+        this.notch = 'E'.charCodeAt() - 'A'.charCodeAt();
     }
 
     setToIII()
     {
         this.name = "III";
         this.setCipher(this.III);
+        this.notch = 'V'.charCodeAt() - 'A'.charCodeAt();
     }
 
     setToIV()
     {
         this.name = "IV";
         this.setCipher(this.IV);
+        this.notch = 'J'.charCodeAt() - 'A'.charCodeAt();
     }
 
     setToV()
     {
         this.name = "V";
         this.setCipher(this.V);
+        this.notch = 'Z'.charCodeAt() - 'A'.charCodeAt();
     }
 
     getPosition(inOffset)

@@ -1,8 +1,10 @@
 //main role of engine is to handle the mechanics of the rotors
 class Engine
 {
-    constructor(x=width/2, y=100)
+    constructor(plugboard=null, x=width/2, y=100)
     {
+        this.plugboard = plugboard;
+
         this.red = color(255, 0, 0);
 
         //0 is right most rotor
@@ -25,33 +27,70 @@ class Engine
         this.rotors[3].setToII();
         this.rotors[4].setToI();
 
-this.reflectorSlot.reflector = this.reflectors[1];
-
-
-//this.rotorStack.rotors.push(this.rotors[0]);
-//this.rotorStack.rotors.push( this.rotors[0], this.rotors[1]);
-this.rotorStack.rotors.push( this.rotors[2], this.rotors[3], this.rotors[4]);
-//this.rotorStack.rotors.push( this.rotors[0], this.rotors[1], this.rotors[2], this.rotors[3]);
-//this.rotorStack.rotors.push( this.rotors[0], this.rotors[1], this.rotors[2], this.rotors[3], this.rotors[4] );
-
-        //stacking them like cards, looks cool but can accidentally click/touch the ones behind it
-        // let startOffsetX = 2;
-        // let startOffsetY = 10;
-
-        // for(let i = this.rotors.length-1; i > -1; i--)
-        // {
-        //     this.rotors[i].x = this.rotors[i].x - i * startOffsetX;
-        // }
-
-        // startOffsetX = 10;
-        // startOffsetY = 10;
-
-        // this.reflectors[0].x = this.reflectors[1].x - startOffsetX;
-        // this.reflectors[0].y = this.reflectors[1].y + startOffsetY;
+        this.reflectorSlot.reflector = this.reflectors[1];
+        this.rotorStack.rotors.push(this.rotors[4], this.rotors[3], this.rotors[2]);
     }
 
-    cipher(inIndex)
+    cipher(inChar)
     {
+        let out;
+
+        if(inChar && this.rotorStack.rotors.length > 0 && this.reflectorSlot.reflector)
+        {
+            //let rotateNext = false;
+            let notched = false;
+
+            //has to be done from right to left
+            for(let i = this.rotorStack.rotors.length-1; i > -1; i--)
+            {
+                let current = this.rotorStack.rotors[i].getPosition(this.rotorStack.rotors[i].translate);
+                let notch = this.rotorStack.rotors[i].getPosition(this.rotorStack.rotors[i].notch);
+
+                //right most motor always rotates or rotates when current rotor is at notch position or driven by previous rotor
+                if(i == this.rotorStack.rotors.length-1 || current == notch || notched)
+                {
+                    this.rotorStack.rotors[i].rotateDown();
+                }
+
+                if(current ==  notch)
+                {
+                    notched = true;
+                }
+                else
+                {
+                    notched = false;
+                }
+
+            }
+
+            //swaps 2 characters
+            out = plugboard.cipher(inChar);
+
+            //convert character into index
+            let charCodeA = 'A'.charCodeAt();
+            out = out.charCodeAt() - charCodeA;
+
+            //cipher through rotors from right to left of the machine
+            for(let i = this.rotorStack.rotors.length-1; i > -1; i--)
+            {
+                out = this.rotorStack.rotors[i].cipher(out);
+            }
+
+            //cipher through reflector
+            out = this.reflectorSlot.reflector.cipher(out);
+
+            //cipher through rotors from left to right of the machine
+            for(let i = 0; i < this.rotorStack.rotors.length; i++)
+            {
+                out = this.rotorStack.rotors[i].cipher(out, false);
+            }
+
+            out = plugboard.cipher(String.fromCharCode(charCodeA + out));
+
+            //outputText = "cipher " + inChar + " > " + out;
+        }
+
+        return out;
     }
 
     draw()

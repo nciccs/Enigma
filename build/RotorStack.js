@@ -152,7 +152,7 @@ class RotorStack
         
         fill(this.cursorColor);
         stroke(this.cursorColor);
-//alert("here");
+
         if(this.cursor > -1)
         {
             //let cursorX = this.topLeftX + (gap+Rotor.START_WIDTH/2) + this.cursor*(gap+Rotor.START_WIDTH);
@@ -163,24 +163,4 @@ class RotorStack
         }
         pop();
     }
-/*
-        let leftoverSpace = this.width - Rotor.START_WIDTH * numSlots;
-        let gap = leftoverSpace / (1+numSlots);
-
-        for(let i = 0; i < numSlots; i++)
-        {
-            //add in a gap and add in to middle of rotor, offset by multiple of gap + rotor width
-            let rotorX = this.topLeftX + (gap+Rotor.START_WIDTH/2) + i*(gap+Rotor.START_WIDTH);
-
-            //draw a shadow/silhouette of rotor representing rotor slot          
-            Rotor.drawRotor(rotorX, this.y, this.slotColor, this.slotColor);
-
-            //this teleports rotor inside rotors into position every draw call
-            if(this.rotors.length > 0)
-            {
-                this.rotors[i].x = rotorX;
-                this.rotors[i].y = this.y;
-            }
-        }
-*/
 }
